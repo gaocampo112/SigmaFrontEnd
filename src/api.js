@@ -51,6 +51,29 @@ async function getSubjectGeneral() {
   }
 }
 
+async function getTeacherGeneral() {
+  try {
+    const response = await fetch(`${url}/api/teacher/GetAllTeachers`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data || !Array.isArray(data)) {
+      throw new Error(
+        "La respuesta de la API no contiene un array de estudiantes"
+      );
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error al obtener datos de estudiantes:", error.message);
+    throw error;
+  }
+}
+
 async function getGradeGeneral() {
   try {
     const response = await fetch(`${url}/api/grade/GetAllGrades`);
@@ -77,4 +100,5 @@ export default {
   getStudentGeneral,
   getSubjectGeneral,
   getGradeGeneral,
+  getTeacherGeneral,
 };

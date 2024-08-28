@@ -83,20 +83,38 @@ export default {
   methods: {
     async Login() {
       try {
-        const students = await api.getStudentGeneral();
-        const authenticatedStudent = students.find(
-          (student) =>
-            parseInt(student.userName) === parseInt(this.username) &&
-            parseInt(student.password) === parseInt(this.password)
-        );
-        if (authenticatedStudent) {
-          this.$store.dispatch("setStudent", authenticatedStudent);
-          this.$router.push({ name: "student" });
+        if (this.selecteOption == "") {
+          return alert("Select if you are a studen or a teacher");
+        }
+        if (this.selecteOption == "student") {
+          const students = await api.getStudentGeneral();
+          const authenticatedStudent = students.find(
+            (student) =>
+              parseInt(student.userName) === parseInt(this.username) &&
+              parseInt(student.password) === parseInt(this.password)
+          );
+          if (authenticatedStudent) {
+            this.$store.dispatch("setStudent", authenticatedStudent);
+            this.$router.push({ name: "student" });
+          } else {
+            alert("Incorrect username or password");
+          }
         } else {
-          alert("Incorrect username or password");
+          const teachers = await api.getTeacherGeneral();
+          const authenticatedTeacher = teachers.find(
+            (teacher) =>
+              parseInt(teacher.userName) === parseInt(this.username) &&
+              parseInt(teacher.password) === parseInt(this.password)
+          );
+          if (authenticatedTeacher) {
+            this.$store.dispatch("setStudent", authenticatedTeacher);
+            this.$router.push({ name: "teacher" });
+          } else {
+            alert("Incorrect username or password");
+          }
         }
       } catch (error) {
-        console.error("Error getting students:", error);
+        console.error("Error getting teachers:", error);
       }
     },
   },

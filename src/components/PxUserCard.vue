@@ -7,14 +7,20 @@
       <img src="../image/usuario.png" height="100" width="100" />
       <div class="d-flex flex-column justify-content-center w-100">
         <span class="name mt-3"
-          ><strong>Name: </strong>{{ student.studentName }}</span
+          ><strong>Name: </strong
+          >{{ student.studentName || student.teacherName }}</span
         >
         <span class="name mt-3"
-          ><strong>Last Name: </strong>{{ student.studentLastName }}</span
+          ><strong>Last Name: </strong
+          >{{ student.studentLastName || student.teacherLastName }}</span
         >
         <span class="name mt-3"
-          ><strong>Age: </strong>{{ student.studentAge }}</span
+          ><strong>Age: </strong
+          >{{ student.studentAge || student.teacherAge }}</span
         >
+        <span class="name mt-3" v-if="student.teacherSubject">
+          <strong>Subject: </strong>{{ student.teacherSubject }}
+        </span>
       </div>
       <RouterLink
         to="/"
